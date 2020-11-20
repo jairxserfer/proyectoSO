@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 
+import apple.laf.JRSUIConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -50,7 +51,16 @@ public class ExplorerInterface extends javax.swing.JFrame implements MouseListen
     public static JPanel lastClick;
     public ExplorerInterface(){
         initComponents();
-
+        paint();
+        tree_paint();
+        direction.setText(Explorer.Direction);
+        ImageIcon img_binder = new ImageIcon(getClass().getResource("/Images/folder.png"));
+        ImageIcon image3 = new ImageIcon(img_binder.getImage().getScaledInstance(binder.getWidth(), binder.getHeight(), Image.SCALE_DEFAULT));
+        binder.setIcon(image3);
+        elements.setText("Found: "+ Explorer.currentDir.getChildNodes().getLength()+" Elements");
+        this.user.setText(Explorer.currentUser.getAttribute("name")+ ": ");
+        this.setVisible(true);
+        jMenuItem6.setEnabled(Explorer.pasteState);
     }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -199,7 +209,7 @@ public class ExplorerInterface extends javax.swing.JFrame implements MouseListen
     private void logoutSessionActionPerformed(java.awt.event.ActionEvent event){
         User.outSession();
         this.dispose();
-
+        new StartingInterface();
     }
 
     private void backActionPerformed(java.awt.event.ActionEvent event){
@@ -391,15 +401,161 @@ public class ExplorerInterface extends javax.swing.JFrame implements MouseListen
 
         shareButton.setText("Sharing");
         shareButton.addActionListener(new java.awt.event.ActionListener(){
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 shareButtonActionPerformed(e);
             }
         });
 
+        javax.swing.GroupLayout jPanelMenuLayout = new javax.swing.GroupLayout(jPanelMenu);
+        jPanelMenu.setLayout(jPanelMenuLayout);
+        jPanelMenuLayout.setHorizontalGroup(
+                jPanelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(GroupLayout.Alignment.TRAILING, jPanelMenuLayout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18,18,18)
+                        .addComponent(user, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(direction, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18,18,18)
+                        .addComponent(back)
+                        .addGap(27,27,27)
+                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18,18,18)
+                        .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18,18,18)
+                        .addComponent(searchText, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+                        .addGap(1,1,1)
+                        .addComponent(jButton2)
+                        .addGap(2,2,2)
+                        .addComponent(shareButton)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logoutSession, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+        );
+        jPanelMenuLayout.setVerticalGroup(
+                jPanelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                        .addGroup(jPanelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                                .addGroup(jPanelMenuLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(logoutSession, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(back)
+                                        .addComponent(direction, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(searchText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(shareButton))
+                                .addGroup(jPanelMenuLayout.createSequentialGroup()
+                                        .addGroup(jPanelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(user, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0,0,Short.MAX_VALUE))))
+        );
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Finder");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("colors");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("blue");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("violet");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("red");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("yellow");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("sports");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("basketball");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("soccer");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("football");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("hockey");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("food");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("hot dogs");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("pizza");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("ravioli");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("bananas");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter(){
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                jTree1MouseClicked(e);
+            }
+        });
+        jScrollPane1.setViewportView(jTree1);
+
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(854, 400));
+
+        jPanelContent.setBackground(new java.awt.Color(255,255,255));
+        jPanelContent.setComponentPopupMenu(jPopupMenu1);
+        jPanelContent.setLayout(new java.awt.GridLayout(0,8));
+        jScrollPane2.setViewportView(jPanelContent);
+
+        binder.setText(" ");
+        binder.setMaximumSize(new java.awt.Dimension(45, 45));
+        binder.setMinimumSize(new java.awt.Dimension(45, 45));
+        binder.setPreferredSize(new java.awt.Dimension(45, 45));
+
+        elements.setText(" ");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(jPopupMenu, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                       .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                               .addGroup(layout.createSequentialGroup()
+                                       .addGap(10,10,10)
+                                       .addComponent(binder, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+                                       .addGap(18,18,18)
+                                       .addComponent(elements, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+                                       .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                               .addGroup(layout.createSequentialGroup()
+                                       .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+                                       .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                       .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                       .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(binder, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(elements, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pack();
+        setLocationRelativeTo(null);
     }
 
+    private void jTree1MouseClicked(java.awt.event.MouseEvent e){
+
+    }
 
 
     public void paint(){
